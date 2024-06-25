@@ -17,7 +17,6 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("HomePage component mounted");
     const loadProducts = async () => {
       setLoading(true);
       try {
