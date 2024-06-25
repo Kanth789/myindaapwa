@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/slice/cartSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { addProductToItems } from "../redux/slice/ProductSlice";
 import { Button, Rating } from "@mui/material";
 import Loader from "../components/Loader";

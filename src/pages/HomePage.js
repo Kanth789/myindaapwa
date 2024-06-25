@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProductToItems } from "../redux/slice/ProductSlice";
-import Products from "./Products";
-import { Button, Skeleton } from "@mui/material";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { showSnackBar } from "../redux/slice/snackBar";
 import { fetchProducts } from "../helper/products";
@@ -39,7 +38,7 @@ const HomePage = () => {
     };
 
     loadProducts();
-  }, []);
+  }, [dispatch]);
 
   const onClickExplore = () => {
     navigate("/products");

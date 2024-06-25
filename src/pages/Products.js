@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useDispatch } from "react-redux";
