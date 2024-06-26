@@ -63,7 +63,7 @@ const CartPage = () => {
           <div className="flex flex-col items-end">
             <div>
               <span className="text-lg">{UI.TOTAL_AMOUNT}</span>:{" "}
-              <span className="font-bold text-2xl">{totalAmount}/-</span>
+              <span className="font-bold text-2xl">{Math.floor(totalAmount)}/-</span>
             </div>
           </div>
         </>
