@@ -1,16 +1,24 @@
-body{
-  font-family:'Times New Roman', Times, serif;
+body {
+  font-family: "Times New Roman", Times, serif;
 }
 .container {
   max-width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
+
 .card-border {
   background: #ffffff;
   box-shadow: 0rem 0.19rem 0.5rem rgba(72, 178, 255, 0.16);
   border-radius: 0.5rem;
   border: 1px solid #ebf0f6;
+}
+@media (min-width: 992px) and (max-width: 1120px) {
+  .container-fluid {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 @media (min-width: 818px) and (max-width: 992px) {
   .container {
