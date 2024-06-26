@@ -1,7 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart } from "../redux/slice/cartSlice";
+import { addQuantity, removeFromCart, removeQuantity } from "../redux/slice/cartSlice";
 import { Rating } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import UI from "../constants/ui";
 
 const CartPage = () => {
@@ -37,10 +39,18 @@ const CartPage = () => {
                       />
                     </div>
                     <div className="flex flex-col md:flex-row lg:flex-row  items-center">
-                      <div className="lg:me-6">{UI.QUANTITY}: {item.quantity}</div>
+                      <div className="lg:me-6 flex items-center">
+                        <div onClick={()=>dispatch(addQuantity(item.id))} className="py-1 px-2 bg-slate-400 rounded cursor-pointer">
+                          <AddIcon fontSize="12px"/>
+                        </div>
+                        <h6 className="p-2">{item.quantity}</h6>
+                        <div onClick={()=>dispatch(removeQuantity(item.id))} className="py-1 px-2 bg-slate-400 rounded cursor-pointer">
+                          <RemoveIcon fontSize="12px"/>
+                        </div>
+                      </div>
                       <button
                         onClick={() => dispatch(removeFromCart(item.id))}
-                        className="bg-red-600 text-white px-4 py-2 rounded"
+                        className="bg-red-600 text-white px-4 py-2 rounded md:ms-1"
                       >
                         {UI.REMOVE}
                       </button>
@@ -51,7 +61,10 @@ const CartPage = () => {
             ))}
           </ul>
           <div className="flex flex-col items-end">
-            <div><span className="text-lg">{UI.TOTAL_AMOUNT}</span> - <span className="font-bold text-2xl">{totalAmount}</span></div>
+            <div>
+              <span className="text-lg">{UI.TOTAL_AMOUNT}</span>:{" "}
+              <span className="font-bold text-2xl">{totalAmount}/-</span>
+            </div>
           </div>
         </>
       )}

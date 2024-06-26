@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/slice/cartSlice";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { addProductToItems } from "../redux/slice/ProductSlice";
 import { Button, Rating } from "@mui/material";
 import Loader from "../components/Loader";
@@ -10,17 +10,18 @@ import UI from "../constants/ui";
 const ProductDetailsPage = () => {
   const [productDetail, setProductDetail] = useState(null);
   const similarProductsFromStore = useSelector((state) => state.product.items);
-  const [addedtoCart,setAddedtoCart] = useState(false) 
   const [similarProducts, setSimilarProducts] = useState(
     similarProductsFromStore || []
   );
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [productId,setProductId] = useState(id)
+  const [productId, setProductId] = useState(id);
   const cart = useSelector((state) => state.cart);
+  const isProductInCart = cart?.items?.some(
+    (item) => item.id === productDetail?.id
+  );
 
   useEffect(() => {
-    setAddedtoCart(false)
     const fetchProduct = async () => {
       try {
         const response = await fetch(
@@ -47,7 +48,7 @@ const ProductDetailsPage = () => {
             "https://fakestoreapi.com/products?limit=5"
           );
           const data = await response.json();
-          setSimilarProducts(data.slice(0,5));
+          setSimilarProducts(data.slice(0, 5));
           dispatch(addProductToItems(data));
         } catch (error) {
           console.error("Fetch error:", error);
@@ -56,20 +57,19 @@ const ProductDetailsPage = () => {
 
       fetchProducts();
     } else {
-      setSimilarProducts(similarProductsFromStore.slice(2,7));
+      setSimilarProducts(similarProductsFromStore.slice(2, 7));
     }
   }, [dispatch, similarProductsFromStore]);
 
   const handleAddToCart = () => {
-    dispatch(addToCart(productDetail));
-    setAddedtoCart(true)
+    if (!isProductInCart) {
+      dispatch(addToCart(productDetail));
+    }
   };
 
   const onClickProductDetailPage = (id) => {
     setProductId(id);
   };
-
-  const isProductInCart = cart?.items?.some((item) => item.id === productDetail?.id);
 
   return productDetail ? (
     <div className="container p-2">
@@ -83,14 +83,16 @@ const ProductDetailsPage = () => {
         </div>
         <div className="lg:ms-2 ms-0 card-border p-4 rounded flex flex-col justify-evenly items-start">
           <h2 className="text-lg font-bold">
-            {UI.TITLE}: <span className="font-normal">{productDetail.title}</span>
+            {UI.TITLE}:{" "}
+            <span className="font-normal">{productDetail.title}</span>
           </h2>
           <p className="mb-2 font-semibold">
             {UI.DESCRIPTION}:
             <span className="font-normal"> {productDetail.description}</span>
           </p>
           <p className="mb-2 font-semibold">
-            {UI.PRICE}: <span className="font-normal">${productDetail.price}</span>
+            {UI.PRICE}:{" "}
+            <span className="font-normal">${productDetail.price}</span>
           </p>
           <div>
             <Rating
@@ -103,9 +105,9 @@ const ProductDetailsPage = () => {
           <Button
             onClick={handleAddToCart}
             className="bg-blue-600 text-white px-4 py-2 rounded"
-            variant={addedtoCart ? 'outlined':'contained'}
+            variant={isProductInCart ? "outlined" : "contained"}
           >
-            {addedtoCart || isProductInCart ? 'Added to Cart' :'Add to Cart'}
+            {isProductInCart ? "Added to Cart" : "Add to Cart"}
           </Button>
         </div>
       </div>
@@ -118,28 +120,32 @@ const ProductDetailsPage = () => {
             onClick={() => onClickProductDetailPage(eachItem.id)}
           >
             <div className="flex flex-col h-full justify-between">
-            <div>
-              <img
-                src={eachItem.image}
-                alt={eachItem.title || "eachItem"}
-                className="mx-auto w-full h-48 object-contain rounded"
-              />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold">
-                {UI.TITLE}: <span className="font-normal">{eachItem.title}</span>
-              </h2>
-              <p className="mb-2 font-semibold">
-                {UI.PRICE}: <span className="font-normal">${eachItem.price}</span>
-              </p>
-              <Rating
-                name="half-rating-read"
-                defaultValue={eachItem.rating.rate}
-                precision={0.5}
-                readOnly
-              />
-              <div>{UI.STOCK}: {`${eachItem.rating.count}`}</div>
-            </div>
+              <div>
+                <img
+                  src={eachItem.image}
+                  alt={eachItem.title || "eachItem"}
+                  className="mx-auto w-full h-48 object-contain rounded"
+                />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold">
+                  {UI.TITLE}:{" "}
+                  <span className="font-normal">{eachItem.title}</span>
+                </h2>
+                <p className="mb-2 font-semibold">
+                  {UI.PRICE}:{" "}
+                  <span className="font-normal">${eachItem.price}</span>
+                </p>
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={eachItem.rating.rate}
+                  precision={0.5}
+                  readOnly
+                />
+                <div>
+                  {UI.STOCK}: {`${eachItem.rating.count}`}
+                </div>
+              </div>
             </div>
           </div>
         ))}
