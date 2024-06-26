@@ -1,4 +1,6 @@
 import React from "react";
+import bannerTwo from '../images/bannertwo.png'
+
 
 const AboutPage = () => {
   return (
@@ -61,7 +63,7 @@ const AboutPage = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundImage:
-            "url('https://i.ibb.co/TtG001G/Black-and-White-Modern-Grunge-Plastic-Texture-Streetwear-Landscape-Banner.png')",
+            `url(${bannerTwo})`,
         }}
       ></div>
       <div className="float-right my-3 italic">

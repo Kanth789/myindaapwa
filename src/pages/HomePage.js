@@ -8,6 +8,8 @@ import { fetchProducts } from "../helper/products";
 import ProductCard from "../components/ProductCard";
 import ProductCardSkeleton from "../components/ProductCardSkeleton";
 import UI from "../constants/ui";
+import bannerOne from '../images/bannerOne.png'
+import bannerTwo from '../images/bannertwo.png'
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -52,7 +54,7 @@ const HomePage = () => {
           className="p-4 h-[50vh] w-full bg-cover bg-[top_25%_right_0] px-20 flex flex-col items-center justify-center leading-none"
           style={{
             backgroundImage:
-              "url('https://i.ibb.co/nM5Yqth/Black-and-White-Modern-Grunge-Plastic-Texture-Streetwear-Landscape-Banner-1.png')",
+              `url(${bannerOne})`,
           }}
         >
           <div className="text-center text-lightCream">
@@ -95,7 +97,7 @@ const HomePage = () => {
         className="h-[50vh] w-full bg-cover bg-[top_25%_right_0] px-20 flex flex-col items-start justify-center leading-none"
         style={{
           backgroundImage:
-            "url('https://i.ibb.co/TtG001G/Black-and-White-Modern-Grunge-Plastic-Texture-Streetwear-Landscape-Banner.png')",
+            `url(${bannerTwo})`,
         }}
       ></div>
     </div>
